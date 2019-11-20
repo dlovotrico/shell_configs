@@ -8,8 +8,8 @@ case $- in
       *) return;;
 esac
 
+
 # don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
 HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
@@ -65,41 +65,58 @@ function exitstatus {
    EXITSTATUS="$?"
    RED="\[$(tput setaf 1)\]"
    GRN="\[$(tput setaf 2)\]"
-   BLU="\[$(tput setaf 4)\]" 
-   MAG="\[$(tput setaf 5)\]"
+   BLU="\[$(tput setaf 81)\]" 
+   MAG="\[$(tput setaf 75)\]"
+   GRA="\[$(tput setaf 249)\]"
+
                           
    BOLD="\[\033[1m\]"
    OFF="\[$(tput sgr0)\]" 
-                                     
-   BASEPROMPT="${BOLD}${RED}\u${OFF}@${MAG}\h${OFF} ${BLU}$(pwd)${OFF} "
-                                           
+
+   # Store the IP address
+   # Uncomment this line if you aren't using the option 2.
+   # THEIP=$(dig @resolver1.opendns.com ANY myip.opendns.com +short)
+                           
+    # Option 1: Show the localhost
+    BASEPROMPT="${BOLD}${RED}\u${OFF}@${MAG}\h${OFF} ${BLU}$(pwd)${OFF}"
+    # Option 2: show the IP
+    # BASEPROMPT="${BOLD}${RED}\u${OFF}@${BOLD}${MAG}$THEIP${OFF} ${BLU}$(pwd)${OFF} "
+
    if [ "${EXITSTATUS}" -eq 0 ]
    then
-       STATUSPROMPT="${BASEPROMPT}${BOLD}${GRN}>${OFF}"
+       STATUSPROMPT="${BOLD}${GRN}>${OFF}"
    else
-       STATUSPROMPT="${BASEPROMPT}${BOLD}${RED}>${OFF}"
+       STATUSPROMPT="${BOLD}${RED}>${OFF}"
    fi
 
    # CHECK IF WE'RE IN A SSH CONNECTION
    # If one of the variables SSH_CLIENT or SSH_TTY is defined, it's an ssh session.
    # If the login shell's parent process name is sshd, it's an ssh session.
 
-   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-       SESSION_TYPE=remote
-       # many other tests omitted
+   if [ -n "$SSH_CLIENT" ]; then
+       # - the space between the variables determines the margin
+       #   of the prompt
+       PS1="${GRA}[${OFF}${BASEPROMPT}${GRA}]${OFF} ${STATUSPROMPT} "
    else
-       case $(ps -o comm= -p $PPID) in
-       sshd|*/sshd) SESSION_TYPE=remote;;
-       esac
+       PS1="${BASEPROMPT} ${STATUSPROMPT} "
    fi
 
-   # Now we format the prompt.
-   if [ -n $SESSION_TYPE ]
-   then
-       PS1="${BASEPROMT} ${STATUSPROMPT}"
-   else
-       PS1="${BASEPROMT} [${STATUSPROMPT}]"
-   fi
+#   if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+#       SESSION_TYPE=remote
+#       # many other tests omitted
+#   else
+#       case $(ps -o comm= -p $PPID) in
+#       sshd|*/sshd) SESSION_TYPE=remote;;
+#       esac
+#   fi
+#
+#   # Now we format the prompt.
+#   if [ -n $SESSION_TYPE ]
+#   then
+#       PS1="${BASEPROMT} ${STATUSPROMPT}"
+#   else
+#       PS1="${BASEPROMT} [${STATUSPROMPT}]"
+#   fi
 
  }   
                                                                                                                                      
@@ -123,17 +140,14 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
 
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
-fi
+
+
+# Commands colors (colors for ls, dir, grep, etc)
+# Section moved into .bash_aliases
+
+
+
 
 # colored GCC warnings and errors
 #export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'

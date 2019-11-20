@@ -6,6 +6,8 @@ alias ranger='wname ranger; ranger'
 alias ncmpcpp='wname ncmpcpp; ncmpcpp'
 
 
+
+
 # systemd
 alias ssysup='sudo systemctl start'
 alias ssysdown='sudo systemctl stop'
@@ -29,6 +31,9 @@ alias syslstim='systemctl --user list-timers'
 alias syslsfail='systemctl --user --failed'
 alias syslog='journalctl -xe'
 
+
+
+
 # navigation
 alias cdd='cd ..'
 alias cd2='cd ../..'
@@ -38,24 +43,41 @@ alias cd5='cd ../../../../..'
 
 md () { mkdir -p "$@" && cd "$@"; }
 
+
+
+
 # grep
 # color support
+# enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
+
+
 
 # vim
 alias vim='wname vim; vim'
 alias testvim='vim ~/Documents/code/eudyptula/01-helloworld/hello_world.c'
 vimp () { vim $( find "$@" -maxdepth 1 -type f ); }
 
+
+
+
 # administration
 alias dirsize='du -h -d 1 | sort -rh | less'
 alias filesize='du -hS | sort -rh | less'
 alias p8='ping -c 3 8.8.8.8'
+
+
+
 
 #ls
 alias la='ls -A'
@@ -64,9 +86,15 @@ alias ll='ls -alF'
 alias cls="ls -lha --color=always -F --group-directories-first |awk '{k=0;s=0;for(i=0;i<=8;i++){;k+=((substr(\$1,i+2,1)~/[rwxst]/)*2^(8-i));};j=4;for(i=4;i<=10;i+=3){;s+=((substr(\$1,i,1)~/[stST]/)*j);j/=2;};if(k){;printf(\"%0o%0o \",s,k);};print;}'"
 alias lstree="ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'"
 
+
+
+
+
 # fix sudo
 alias sudo='sudo '
 alias sudoe='sudo -E '
+
+
 
 
 # useful for long-running commands: <command>; alert
