@@ -93,6 +93,8 @@ function exitstatus {
    # If one of the variables SSH_CLIENT or SSH_TTY is defined, it's an ssh session.
    # If the login shell's parent process name is sshd, it's an ssh session.
 
+   # This will make the prompt get enclosed in [brackets] if the shell is in a 
+   # SSH connection.
    if [ -n "$SSH_CLIENT" ]; then
        # - the space between the variables determines the margin
        #   of the prompt

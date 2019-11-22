@@ -8,7 +8,7 @@
 " - Airline 
 "   https://github.com/vim-airline/vim-airline
 "  
-" - nertree
+" - nerdtree
 "   https://github.com/scrooloose/nerdtree
 "
 " - fugitive (Git integration, use with lightline)
@@ -46,10 +46,13 @@ filetype off                  " required
 " set guifont=Source\ Code\ Pro\ for\ Powerline:h15:cANSI 
 
 
-" ##--------------------------------------------------------------------[BUNDLE CONFIG]
 " set a path to the colors directory just in case
 " set rtp+=~/.vim/colors/
 
+
+
+
+" ##--------------------------------------------------------------------[BUNDLE CONFIG]
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim

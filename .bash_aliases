@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# terminal title bar.
+# terminal title bar
 wname() { echo -en "\033]0;$@\007"; }
 alias ranger='wname ranger; ranger'
 alias ncmpcpp='wname ncmpcpp; ncmpcpp'
