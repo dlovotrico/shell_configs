@@ -214,3 +214,5 @@ LINK 0;34 # symbolic link. (If you set this to 'target' instead of a
   .opus 00;36
   .spx 00;36
   .xspf 00;36
+  # System and config files
+  .conf 00,33
